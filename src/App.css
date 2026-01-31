@@ -27,6 +27,7 @@ h3 {
 
 .balance h3 {
   margin: 0;
+  color: #333;
 }
 
 .toggle-form-button {
@@ -75,6 +76,7 @@ h3 {
   justify-content: space-between;
   margin: 10px 0 20px;
   font-weight: bold;
+  color:#333
 }
 
 .search {
@@ -98,6 +100,7 @@ h3 {
   align-items: center;
   background: #f4f4f4;
   padding: 8px 12px;
+  color:#1976d2;
   margin-bottom: 8px;
   border-left: 4px solid #999;
   border-radius: 6px;

@@ -6,12 +6,22 @@ const ExpenseTracker = () => {
   const [amount, setAmount] = useState("")
   const [type, setType] = useState('Income')
   const [transaction, setTransaction] = useState([])
- 
-  // Initilize useState using transactions, title, amount, type, showForm and search
+ const [balance, setBalance] = useState(0)
 
   //create filteredTransactions
 
   //Calculate balance using totalIncome and totalExpense
+const totalIncome = transaction
+  .filter((t) => t.type === "Income")
+  .reduce((acc, t) => acc + t.amount, 0);
+
+const totalExpense = transaction
+  .filter((t) => t.type === "expense")
+  .reduce((acc, t) => acc + t.amount, 0);
+
+useEffect(() => {
+  setBalance(totalIncome - totalExpense);
+}, [totalIncome, totalExpense]);
 
   const handleAddTransaction = () => {
   if(!title || !amount) return;
@@ -31,9 +41,9 @@ const ExpenseTracker = () => {
   console.log("Transaction Updated", transaction);
 },[transaction]);
 
-  // const handleDelete = (id) => {
-  //   // implement delete logic
-  // };
+  const handleDelete = (id) => {
+    // implement delete logic
+  };
 
   return (
     
@@ -42,18 +52,19 @@ const ExpenseTracker = () => {
 
       <div className="header-container">
         <div className="balance">
-          <h3 data-testid="balance-amount">Balance: ₹0</h3>
+          <h3 data-testid="balance-amount">Balance: ${balance}</h3>
         </div>
 
         <button
           className="toggle-form-button"
           data-testid="toggle-form-button"
+          onClick={()=>{setFormState(!formState)}}
         >
        {formState ? "Open Form" : "Close Form"}
         </button>
       </div>
 
-        <div className="form">
+      {!formState &&  <div className="form">
           <input    
             type="text"
             value={title}
@@ -81,10 +92,12 @@ const ExpenseTracker = () => {
             Add Transaction
           </button>
         </div>
+}
 
-     {formState && <><div className="summary">
-        <div data-testid="income-amount">Income: ₹0</div>
-        <div data-testid="expenses-amount">Expense: ₹0</div>
+     {/* {formState && <> */}
+     <div className="summary">
+        <div data-testid="income-amount">Income: ${totalIncome}</div>
+        <div data-testid="expenses-amount">Expense: ${totalExpense}</div>
       </div>
 
       <input
@@ -92,8 +105,23 @@ const ExpenseTracker = () => {
         data-testid="search-input"
         placeholder="Search..."
         className="search"
-      /></>
-      } 
+      />
+      <div className="transactions">
+        <ul>
+{transaction.map((t) => (
+          <li key={t.id} className={`${t.type === "Income" ? "income" : "expense"  }`}>
+            <span>{t.title}</span>
+            <span>${t.amount}</span>
+            <button data-testid="delete-button" onClick={() => handleDelete(t.id)}>
+              Remove
+            </button>
+          </li>
+        ))}
+        </ul>
+        
+      </div>
+      {/* </>
+      }  */}
 
     </div>
   );
