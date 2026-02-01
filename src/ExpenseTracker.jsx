@@ -7,10 +7,11 @@ const ExpenseTracker = () => {
   const [type, setType] = useState('Income')
   const [transaction, setTransaction] = useState([])
  const [balance, setBalance] = useState(0)
-
-  //create filteredTransactions
-
-  //Calculate balance using totalIncome and totalExpense
+ const [searchTerm, setSearchTerm] = useState("")
+const filteredTransactions = transaction.filter((t)=>{
+  return t.title.toLowerCase().includes(searchTerm.toLowerCase()) 
+})
+  
 const totalIncome = transaction
   .filter((t) => t.type === "Income")
   .reduce((acc, t) => acc + t.amount, 0);
@@ -27,7 +28,7 @@ useEffect(() => {
   if(!title || !amount) return;
       const transactionData = {
       id: Date.now(),
-      title: title,
+      title: title.trim().charAt(0).toUpperCase() + title.trim().slice(1),
       amount: Number(amount),
       type: type,
       }
@@ -43,6 +44,8 @@ useEffect(() => {
 
   const handleDelete = (id) => {
     // implement delete logic
+    const newTansaction = transaction?.filter((t) => t.id !== id);
+    setTransaction(newTansaction);
   };
 
   return (
@@ -88,6 +91,7 @@ useEffect(() => {
             <option value="income">Income</option>
             <option value="expense">Expense</option>
           </select>
+          
         <button data-testid="add-button" onClick={handleAddTransaction}>
             Add Transaction
           </button>
@@ -105,18 +109,22 @@ useEffect(() => {
         data-testid="search-input"
         placeholder="Search..."
         className="search"
+        onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className="transactions">
         <ul>
-{transaction.map((t) => (
+      {filteredTransactions.length>0 ?
+      (filteredTransactions.map((t) => (
           <li key={t.id} className={`${t.type === "Income" ? "income" : "expense"  }`}>
-            <span>{t.title}</span>
-            <span>${t.amount}</span>
+            <span>{t.title} : ${t.amount}</span>
             <button data-testid="delete-button" onClick={() => handleDelete(t.id)}>
               Remove
             </button>
           </li>
-        ))}
+        )))
+        :
+        ( <p>No transactions found</p>  )
+        }
         </ul>
         
       </div>

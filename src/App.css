@@ -4,6 +4,9 @@
   padding: 2rem;
   text-align: center;
 }
+body{
+  background-color: #ddd;
+}
 .tracker-container {
   padding: 20px;
   background: #fefefe;
@@ -12,10 +15,11 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-h2,
-h3 {
+h2 {
   text-align: center;
   margin-bottom: 10px;
+    color: #000;
+
 }
 
 .header-container {
@@ -56,11 +60,14 @@ h3 {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
+  background-color: #ddd;
+  margin: 10px;
+  color: #101010;
 }
 
 .form button {
   padding: 8px;
-  background: #2196f3;
+  background: #4caf50;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -68,7 +75,7 @@ h3 {
 }
 
 .form button:hover {
-  background: #1976d2;
+  background: #388e3c;
 }
 
 .summary {
@@ -83,8 +90,10 @@ h3 {
   width: 96%;
   padding: 8px;
   margin-bottom: 15px;
+  color:#101010;
   border: 1px solid #ddd;
   border-radius: 6px;
+  background-color: #f4f4f4;
   font-size: 14px;
 }
 
@@ -93,19 +102,23 @@ h3 {
   padding: 0;
   margin: 0;
 }
-
+.transactions p{
+  color:#000;
+}
 .transactions li {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #f4f4f4;
   padding: 8px 12px;
-  color:#1976d2;
+  color:#000;
   margin-bottom: 8px;
   border-left: 4px solid #999;
   border-radius: 6px;
 }
-
+.transactions li:hover{
+  transform: translateY(2px);
+}
 .transactions li.income {
   border-color: #4caf50;
 }
